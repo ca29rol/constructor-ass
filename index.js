@@ -1,23 +1,6 @@
 // You are building a feature rollout system for a startup where a FeatureToggle constructor function has properties: featureName (string),
 //  isEnabled (boolean), and userGroupAccess (array of strings like "betaTesters", "admins"), and you must use a prototype method canAccess(userRole)
 //  to return true or false, a method toggleFeature(flag) to enable or disable the feature, and simulate access attempts using if-else and switch statements for different roles.
-// function FeatureToggle(){
-//      constructor(names,isEnabled,userGropAccess);
-//         this.name=names;
-//         this.isEnabled=this.isEnabled;
-//         this.userGropAccess=this.userGropAccess;
-//      }
-
-// faeture.prototype.canAccess=function(userRole){
-//      return `${this.isEnabled} and ${this.userRole}`
-// }
-
-// faeture.prototype.toggle=function(flag){
-//   this. isEnabled == flag;
-// }
-// const board= new FeatureToggle("detailedboard", false,"['betaTesters','admins']");
-// board.toggle(true)
-
 
 function  FeatureToggle(featureName, isEnabled, userGroupAccess) 
 {
@@ -45,7 +28,7 @@ function  FeatureToggle(featureName, isEnabled, userGroupAccess)
     switch (userRole) {
       case "admins":
       case "betaTesters":
-      case "earlyAccessUsers":
+      case "earlyaccessUsers":
         if (featureToggle.canaccess(userRole)) {
           console.log(`accept at ${userRole} for feature ${featureToggle.featureName}.`);
         } else {
@@ -59,7 +42,7 @@ function  FeatureToggle(featureName, isEnabled, userGroupAccess)
   simulateaccessIfElse(board, "admins");
   simulateaccessIfElse(board, "regularUsers");
   simulateaccessSwitch(board, "betaTesters");
-  simulateaccessSwitch(board, "earlyAccessUsers");
+  simulateaccessSwitch(board, "earlyaccessUsers");
   simulateaccessSwitch(board, "guest");
 
 //  In a freelancer time-tracking platform, create a TimeLog constructor 
@@ -100,25 +83,26 @@ function Order(customer, items, status) {
       case "pending":
         if (totalCost > 1000) {
           return "High urgency - pending large order";
-        } else if (totalCost > 500) {
+        } else if (totalCost > 300) {
           return "Medium urgency - pending moderate order";
         } else {
           return "Low urgency - pending small order";
         }
       case "paid":
-        if (totalCost > 1000) {
-          return "High urgency - paid large order";
-        } else if (totalCost > 500) {
-          return "Medium urgency - paid moderate order";
+        if (totalCost > 1000)
+        {
+          return "higher urgency /payment-value high";
+        } else if (totalCost > 300) {
+          return "medium urgency /payment-value fair";
         } else {
-          return "Low urgency - paid small order";
+          return "lower urgency /payment-value low";
         }
       case "transported":
         return "Order transported- no urgency";
-      case "cancelled":
-        return "Order cancelled - no urgency";
+      case "cancel":
+        return "Order cancel un-urgency";
       default:
-        return "Unknown status - check order";
+        return "Unknown status-order-again";
     }
   };
   const customer = {
@@ -150,7 +134,8 @@ function Employee(id, name, performanceMetrics, feedback)
   Employee.prototype.calculateaverageScores = function() {
     const metrics = this.performanceMetrics;
     const keys = Object.keys(metrics);
-    if (keys.length === 0) return 0;
+    if (keys.length === 0)
+         return 0;
     const total = keys.reduce((sum, key) => {
       const val = metrics[key];
       return sum + (typeof val === 'number' ? val : 0);
@@ -158,19 +143,19 @@ function Employee(id, name, performanceMetrics, feedback)
     return total / keys.length;
   };
   Employee.prototype.classifyPerformance = function() {
-    const avgScore = this.calculateaverageScores();
-    if (avgScore >= 90) {
+    const averageScore = this.calculateaverageScores();
+    if (averageScore> 90) {
       return "Onlevel";
-    } else if (avgScore >= 75) {
+    } else if (averageScore > 80) {
       return "Expected";
-    } else if (avgScore >= 60) {
+    } else if (averageScore > 50) {
       return " neerly expected to";
     } else   {
       return "need support";
     }
   };
   Employee.prototype.addfeedback = function(newfeedback) {
-    if (typeof newfeedback !== 'string' || newfeedback.trim() === '') {
+    if (typeof newfeedback !== 'string' || newfeedback.trim() === ' ') {
       return;
     }
     const performanceLevel = this.classifyPerformance();
@@ -179,31 +164,32 @@ function Employee(id, name, performanceMetrics, feedback)
     }
   };
   const employ1 = new Employee(
-    101,
-    "Pedro Porro",
+    80,
+    "pop",
     {
-      communication: 75,
-      efficiency: 88,
-      reliability: 82
+      communication: 60,
+      efficiency: 90,
+      reliability: 72
     },
-    ["Great team player."]
+    ["Great team."]
   );
-  console.log("Average Score:", employ1.calculateaverageScores);
-  console.log("Performance Level:", employ1.classifyPerformance());
+ 
   employ1.addfeedback("Need to impove.");
-  console.log("Feedback after 1st add:", employ1.feedback);
   employ1.performanceMetrics.efficiency = 50;
-  console.log("New Average Score:", employ1.calculateaverageScores());
-  console.log("New Performance Level:", employ1.classifyPerformance());
   employ1.addfeedback("Should focus more on deadlines.");
+  employ1.performanceMetrics.communication = 90;
+  employ1.performanceMetrics.efficiency = 52;
+  employ1.performanceMetrics.reliability = 45;
+  employ1.addfeedback("Urgent support needed.");
+  console.log("Feedback after 1st add:", employ1.feedback);
   console.log("Feedback after 2nd add:", employ1.feedback);
-  employ1.performanceMetrics.communication = 30;
-  employ1.performanceMetrics.efficiency = 35;
-  employ1.performanceMetrics.reliability = 40;
-  console.log("Latest Average Score:", employ1.calculateaverageScores());
-  console.log("Latest Performance Level:", employ1.classifyPerformance());
-  employ1.addfeedback("Urgent improvement required.");
   console.log("Feedback after 3rd add:", employ1.feedback);
+  console.log("new Average Score:", employ1.calculateaverageScores());
+  console.log("new Performance Level:", employ1.classifyPerformance());
+  console.log("new average Score:", employ1.calculateaverageScores());
+  console.log("new performance Level:", employ1.classifyPerformance());
+  console.log("new average Score:", employ1.calculateaverageScores);
+  console.log("new performance Level:", employ1.classifyPerformance());
 
 // Build a simple e-learning system where a Course class has properties: title (string), instructor (object with name and expertise), and students 
 // (array of objects with name and completionStatus), then add prototype methods to return names of students who completed the course, count enrolled
